@@ -1,0 +1,30 @@
+@model IEnumerable<LawyerWebSiteMVC.Data.Slider>
+
+@{
+    ViewData["Title"] = "Sliders";
+}
+
+<div class="container-xl px-4 mt-5">
+    <h1 class="mb-3">Sliders</h1>
+    <a class="btn btn-primary mb-3" asp-action="Create">Yeni Slider</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>İçerik</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var slider in Model)
+            {
+                <tr>
+                    <td>@slider.Content</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@slider.Id">Düzenle</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@slider.Id">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

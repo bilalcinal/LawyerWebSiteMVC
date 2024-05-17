@@ -1,0 +1,36 @@
+@model IEnumerable<LawyerWebSiteMVC.Data.Article>
+
+@{
+    ViewData["Title"] = "Makaleler";
+}
+
+<div class="container-xl px-4 mt-5">
+    <h1 class="mb-3">Makaleler</h1>
+    <a class="btn btn-primary mb-3" asp-action="Create">Yeni Makale</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th>Alt Başlık</th>
+                <th>İçerik</th>
+                <th>Link</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model)
+            {
+                <tr>
+                    <td>@article.Title</td>
+                    <td>@article.Subtitle</td>
+                    <td>@article.Content</td>
+                    <td>@article.link</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@article.Id">Düzenle</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@article.Id">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

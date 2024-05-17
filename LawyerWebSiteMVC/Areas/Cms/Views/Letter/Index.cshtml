@@ -1,0 +1,33 @@
+@model IEnumerable<LawyerWebSiteMVC.Data.Letter>
+
+@{
+    ViewData["Title"] = "Gelen Mesajlar";
+}
+
+<div class="container-xl px-4 mt-5">
+    <h1 class="mb-3">Gelen Mesajlar</h1>
+    <a class="btn btn-primary mb-3" asp-action="Create">Yeni Mesaj</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>İsim</th>
+                <th>Email</th>
+                <th>Başlık</th>
+                <th>İçerik</th>
+                <th>Telefon Numarası</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var letter in Model)
+            {
+                <tr>
+                    <td>@letter.Name</td>
+                    <td>@letter.Email</td>
+                    <td>@letter.Title</td>
+                    <td>@letter.Content</td>
+                    <td>@letter.PhoneNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

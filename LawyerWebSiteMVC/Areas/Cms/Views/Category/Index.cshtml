@@ -1,0 +1,30 @@
+@model IEnumerable<LawyerWebSiteMVC.Data.Category>
+
+@{
+    ViewData["Title"] = "Kategoriler";
+}
+
+<div class="container-xl px-4 mt-5">
+    <h1 class="mb-3">Kategoriler</h1>
+    <a class="btn btn-primary mb-3" asp-action="Create">Yeni Kategori</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Kategori Adı</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.CategoryName</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@category.Id">Düzenle</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@category.Id">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
