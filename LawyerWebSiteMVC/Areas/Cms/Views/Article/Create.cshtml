@@ -6,7 +6,7 @@
 
 <h1>Create Article</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Article.Title" class="control-label"></label>
         <input asp-for="Article.Title" class="form-control" />

@@ -27,10 +27,52 @@
                     <td>@article.link</td>
                     <td>
                         <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@article.Id">Düzenle</a>
-                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@article.Id">Sil</a>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@article.Id" data-title="@article.Title">Sil</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Silme Onayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-body-text">Bu makaleyi silmek istediğinizden emin misiniz?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <form id="deleteForm" method="post">
+                    <input type="hidden" name="id" id="delete-id" />
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            console.log('jQuery is working');
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                console.log('Bootstrap modal is working');
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var title = button.data('title');
+                var modal = $(this);
+                modal.find('.modal-body #modal-body-text').text('Bu makaleyi silmek istediğinizden emin misiniz: "' + title + '"?');
+                modal.find('.modal-footer #delete-id').val(id);
+                modal.find('#deleteForm').attr('action', '/Cms/Article/Delete/' + id);
+            });
+        });
+    </script>
+}

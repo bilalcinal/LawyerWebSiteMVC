@@ -2,6 +2,7 @@ using LawyerWebSiteMVC.Data;
 using LawyerWebSiteMVC.Interface;
 using LawyerWebSiteMVC.Models;
 using Microsoft.EntityFrameworkCore;
+
 namespace LawyerWebSiteMVC.Service
 {
     public class ArticleService : IArticleService
@@ -18,12 +19,20 @@ namespace LawyerWebSiteMVC.Service
             _context.Articles.Add(articleDto.Article);
             await _context.SaveChangesAsync();
 
-            foreach (var photo in articleDto.ArticlePhotos)
+            foreach (var formFile in articleDto.ArticlePhotos)
             {
-                photo.ArticleId = articleDto.Article.Id;
-                _context.ArticlePhotos.Add(photo);
+                using (var memoryStream = new MemoryStream())
+                {
+                    await formFile.CopyToAsync(memoryStream);
+                    var photo = new ArticlePhoto
+                    {
+                        ArticleId = articleDto.Article.Id,
+                        Image = memoryStream.ToArray()
+                    };
+                    _context.ArticlePhotos.Add(photo);
+                }
             }
-            
+
             await _context.SaveChangesAsync();
 
             return (true, "Article created successfully");
@@ -32,6 +41,7 @@ namespace LawyerWebSiteMVC.Service
         public async Task<(bool, string)> UpdateArticleAsync(ArticleDto articleDto)
         {
             var existingArticle = await _context.Articles
+                .Where(a => !a.IsDeleted)
                 .Include(a => a.ArticlePhotos)
                 .FirstOrDefaultAsync(a => a.Id == articleDto.Article.Id);
 
@@ -43,11 +53,23 @@ namespace LawyerWebSiteMVC.Service
             existingArticle.Content = articleDto.Article.Content;
             existingArticle.link = articleDto.Article.link;
 
-            _context.ArticlePhotos.RemoveRange(existingArticle.ArticlePhotos);
-            foreach (var photo in articleDto.ArticlePhotos)
+            if (articleDto.ArticlePhotos != null && articleDto.ArticlePhotos.Any())
             {
-                photo.ArticleId = existingArticle.Id;
-                _context.ArticlePhotos.Add(photo);
+                _context.ArticlePhotos.RemoveRange(existingArticle.ArticlePhotos);
+
+                foreach (var formFile in articleDto.ArticlePhotos)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await formFile.CopyToAsync(memoryStream);
+                        var photo = new ArticlePhoto
+                        {
+                            ArticleId = existingArticle.Id,
+                            Image = memoryStream.ToArray()
+                        };
+                        _context.ArticlePhotos.Add(photo);
+                    }
+                }
             }
 
             await _context.SaveChangesAsync();
@@ -55,17 +77,23 @@ namespace LawyerWebSiteMVC.Service
             return (true, "Article updated successfully");
         }
 
-        public async Task<bool> DeleteArticleAsync(int articleId)
+       public async Task<bool> DeleteArticleAsync(int articleId)
         {
             var article = await _context.Articles
+                .Where(a => !a.IsDeleted)
                 .Include(a => a.ArticlePhotos)
                 .FirstOrDefaultAsync(a => a.Id == articleId);
 
             if (article == null)
                 return false;
 
-            _context.ArticlePhotos.RemoveRange(article.ArticlePhotos);
-            _context.Articles.Remove(article);
+            article.IsDeleted = true;
+
+            foreach (var photo in article.ArticlePhotos)
+            {
+                photo.IsDeleted = true;
+            }
+
             await _context.SaveChangesAsync();
 
             return true;
@@ -74,6 +102,7 @@ namespace LawyerWebSiteMVC.Service
         public async Task<Article> GetArticleByIdAsync(int articleId)
         {
             return await _context.Articles
+                .Where(a => !a.IsDeleted)
                 .Include(a => a.ArticlePhotos)
                 .FirstOrDefaultAsync(a => a.Id == articleId);
         }
@@ -81,6 +110,7 @@ namespace LawyerWebSiteMVC.Service
         public async Task<IEnumerable<Article>> GetAllArticlesAsync()
         {
             return await _context.Articles
+                .Where(a => !a.IsDeleted)
                 .Include(a => a.ArticlePhotos)
                 .ToListAsync();
         }

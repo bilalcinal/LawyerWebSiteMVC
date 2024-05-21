@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LawyerWebSiteMVC.Areas.Cms.Controllers
 {
     [Area("Cms")]
-    [Route("[controller]")]
+    [Route("Cms/[controller]")]
     public class ArticleController : Controller
     {
         private readonly IArticleService _articleService;
@@ -31,52 +31,50 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create([FromBody] ArticleDto articleDto)
+        public async Task<IActionResult> Create(ArticleDto articleDto, List<IFormFile> articlePhotos)
         {
+            articleDto.ArticlePhotos = articlePhotos;
             var result = await _articleService.CreateArticleAsync(articleDto);
             if (result.Item1)
                 return RedirectToAction("Index");
             return View(articleDto);
         }
 
-        [HttpGet]
-        [Route("Edit/{id}")]
+        [HttpGet("Edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var article = await _articleService.GetArticleByIdAsync(id);
             if (article == null)
                 return NotFound();
-            return View(article);
+
+            var articleDto = new ArticleDto
+            {
+                Article = article,
+                ArticlePhotos = null
+            };
+
+            ViewData["ExistingPhotos"] = article.ArticlePhotos.Select(p => new { p.Id, p.Image }).ToList();
+
+            return View(articleDto);
         }
 
-        [HttpPost]
-        [Route("Edit")]
-        public async Task<IActionResult> Edit([FromBody] ArticleDto articleDto)
+        [HttpPost("Edit/{id}")]
+        public async Task<IActionResult> Edit(int id, ArticleDto articleDto, List<IFormFile> articlePhotos)
         {
+            articleDto.ArticlePhotos = articlePhotos;
             var result = await _articleService.UpdateArticleAsync(articleDto);
             if (result.Item1)
                 return RedirectToAction("Index");
             return View(articleDto);
         }
 
-        [HttpGet]
-        [Route("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
-        {
-            var article = await _articleService.GetArticleByIdAsync(id);
-            if (article == null)
-                return NotFound();
-            return View(article);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [Route("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var result = await _articleService.DeleteArticleAsync(id);
             if (result)
                 return RedirectToAction("Index");
-            return View();
+            return View("Error");
         }
     }
 }
