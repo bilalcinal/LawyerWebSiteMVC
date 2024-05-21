@@ -1,10 +1,12 @@
 using LawyerWebSiteMVC.Data;
 using LawyerWebSiteMVC.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace LawyerWebSiteMVC.Service;
-
-public class SliderService : ISliderService
+namespace LawyerWebSiteMVC.Service
+{
+    public class SliderService : ISliderService
     {
         private readonly ApplicationDbContext _context;
 
@@ -28,8 +30,7 @@ public class SliderService : ISliderService
                 return (false, "Slider not found");
 
             existingSlider.Image = slider.Image;
-            existingSlider.Content = slider.Content;
-            existingSlider.MyProperty = slider.MyProperty;
+            existingSlider.Text = slider.Text;
             await _context.SaveChangesAsync();
 
             return (true, "Slider updated successfully");
@@ -58,3 +59,4 @@ public class SliderService : ISliderService
             return await _context.Sliders.ToListAsync();
         }
     }
+}

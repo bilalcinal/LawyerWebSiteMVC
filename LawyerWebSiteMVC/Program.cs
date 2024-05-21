@@ -86,7 +86,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ILetterService, LetterService>();
 builder.Services.AddScoped<ISliderService, SliderService>();
 builder.Services.AddScoped<IAppUserService, AppUserService>();
-
+builder.Services.AddScoped<ICommentService, CommentService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

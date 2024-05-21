@@ -1,10 +1,12 @@
 using LawyerWebSiteMVC.Data;
 using LawyerWebSiteMVC.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace LawyerWebSiteMVC.Service;
-
-public class LetterService : ILetterService
+namespace LawyerWebSiteMVC.Service
+{
+    public class LetterService : ILetterService
     {
         private readonly ApplicationDbContext _context;
 
@@ -25,3 +27,4 @@ public class LetterService : ILetterService
             return await _context.Letters.ToListAsync();
         }
     }
+}

@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using LawyerWebSiteMVC.Data;
 using LawyerWebSiteMVC.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace LawyerWebSiteMVC.Areas.Cms.Controllers
 {
-    [Route("[controller]")]
     [Area("Cms")]
-     public class LetterController : Controller
+    [Route("Cms/[controller]")]
+    public class LetterController : Controller
     {
         private readonly ILetterService _letterService;
 
@@ -21,18 +16,20 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
             _letterService = letterService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var letters = await _letterService.GetAllLettersAsync();
             return View(letters);
         }
 
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(Letter letter)
         {
             var result = await _letterService.CreateLetterAsync(letter);

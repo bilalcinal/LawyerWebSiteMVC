@@ -6,25 +6,67 @@
 
 <div class="container-xl px-4 mt-5">
     <h1 class="mb-3">Sliders</h1>
-    <a class="btn btn-primary mb-3" asp-action="Create">Yeni Slider</a>
+    <a class="btn btn-primary mb-3" asp-action="Create">New Slider</a>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>İçerik</th>
-                <th>İşlemler</th>
+                <th>Image</th>
+                <th>Text</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var slider in Model)
             {
                 <tr>
-                    <td>@slider.Content</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@slider.Id">Düzenle</a>
-                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@slider.Id">Sil</a>
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(slider.Image)" class="img-thumbnail" style="max-width: 200px;" />
+                    </td>
+                    <td>@slider.Text</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@slider.Id">Edit</a>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@slider.Id" data-text="@slider.Text">Delete</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-body-text">Are you sure you want to delete this slider?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="post">
+                    <input type="hidden" name="id" id="delete-id" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var text = button.data('text');
+                var modal = $(this);
+                modal.find('.modal-body #modal-body-text').text('Are you sure you want to delete this slider: "' + text + '"?');
+                modal.find('.modal-footer #delete-id').val(id);
+                modal.find('#deleteForm').attr('action', '/Cms/Slider/Delete/' + id);
+            });
+        });
+    </script>
+}

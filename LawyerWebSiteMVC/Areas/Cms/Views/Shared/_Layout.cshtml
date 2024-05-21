@@ -65,6 +65,7 @@
                                 <a class="nav-link" asp-controller="Category" asp-action="Index">Kategori</a>
                                 <a class="nav-link" asp-controller="Slider" asp-action="Index">Slider</a>
                                 <a class="nav-link" asp-controller="Article" asp-action="Index">Makaleler</a>
+                                <a class="nav-link" asp-controller="Comment" asp-action="Index">Yorumlar</a>
                             </nav>
                         </div>
                         <div class="sidenav-menu-heading">Ayarlar</div>
@@ -92,6 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/assets-cms/lib/toastr/build/toastr.min.js"></script>
     <script src="~/assets-cms/js/scripts.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> <!-- CKEditor script -->
     @RenderSection("Validation", required: false)
     @RenderSection("Scripts", required: false)
 </body>

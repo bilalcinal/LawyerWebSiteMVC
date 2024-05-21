@@ -10,6 +10,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th>Kategori</th>
                 <th>Başlık</th>
                 <th>Alt Başlık</th>
                 <th>İçerik</th>
@@ -21,9 +22,10 @@
             @foreach (var article in Model)
             {
                 <tr>
+                    <td>@article.Category?.CategoryName</td> <!-- CategoryName gösteriliyor -->
                     <td>@article.Title</td>
                     <td>@article.Subtitle</td>
-                    <td>@article.Content</td>
+                    <td>@Html.Raw(article.Content.Length > 100 ? article.Content.Substring(0, 100) + "..." : article.Content)</td>
                     <td>@article.link</td>
                     <td>
                         <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@article.Id">Düzenle</a>
@@ -62,9 +64,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-            console.log('jQuery is working');
             $('#deleteModal').on('show.bs.modal', function (event) {
-                console.log('Bootstrap modal is working');
                 var button = $(event.relatedTarget);
                 var id = button.data('id');
                 var title = button.data('title');

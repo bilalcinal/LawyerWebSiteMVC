@@ -1,6 +1,7 @@
 using LawyerWebSiteMVC.Interface;
 using LawyerWebSiteMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LawyerWebSiteMVC.Areas.Cms.Controllers
 {
@@ -9,10 +10,12 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
     public class ArticleController : Controller
     {
         private readonly IArticleService _articleService;
+        private readonly ICategoryService _categoryService;
 
-        public ArticleController(IArticleService articleService)
+        public ArticleController(IArticleService articleService, ICategoryService categoryService)
         {
             _articleService = articleService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -24,8 +27,10 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
 
         [HttpGet]
         [Route("Create")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var allCategories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = new SelectList(allCategories, "Id", "CategoryName");
             return View();
         }
 
@@ -37,6 +42,9 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
             var result = await _articleService.CreateArticleAsync(articleDto);
             if (result.Item1)
                 return RedirectToAction("Index");
+            
+            var allCategories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = new SelectList(allCategories, "Id", "CategoryName");
             return View(articleDto);
         }
 
@@ -53,6 +61,9 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
                 ArticlePhotos = null
             };
 
+            var allCategories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = new SelectList(allCategories, "Id", "CategoryName", article.CategoryId);
+
             ViewData["ExistingPhotos"] = article.ArticlePhotos.Select(p => new { p.Id, p.Image }).ToList();
 
             return View(articleDto);
@@ -65,6 +76,9 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
             var result = await _articleService.UpdateArticleAsync(articleDto);
             if (result.Item1)
                 return RedirectToAction("Index");
+            
+            var allCategories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = new SelectList(allCategories, "Id", "CategoryName", articleDto.Article.CategoryId);
             return View(articleDto);
         }
 

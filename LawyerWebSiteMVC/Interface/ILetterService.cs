@@ -1,7 +1,10 @@
 using LawyerWebSiteMVC.Data;
-namespace LawyerWebSiteMVC.Interface;
-public interface ILetterService
+
+namespace LawyerWebSiteMVC.Interface
 {
-    Task<(bool, string)> CreateLetterAsync(Letter letter);
-    Task<IEnumerable<Letter>> GetAllLettersAsync();
+    public interface ILetterService
+    {
+        Task<(bool, string)> CreateLetterAsync(Letter letter);
+        Task<IEnumerable<Letter>> GetAllLettersAsync();
+    }
 }

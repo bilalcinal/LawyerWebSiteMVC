@@ -1,9 +1,12 @@
 using LawyerWebSiteMVC.Data;
 using LawyerWebSiteMVC.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace LawyerWebSiteMVC.Service;
-public class CategoryService : ICategoryService
+namespace LawyerWebSiteMVC.Service
+{
+    public class CategoryService : ICategoryService
     {
         private readonly ApplicationDbContext _context;
 
@@ -49,4 +52,10 @@ public class CategoryService : ICategoryService
         {
             return await _context.Categories.ToListAsync();
         }
+
+        public async Task<Category> GetCategoryByIdAsync(int id)
+        {
+            return await _context.Categories.FindAsync(id);
+        }
     }
+}

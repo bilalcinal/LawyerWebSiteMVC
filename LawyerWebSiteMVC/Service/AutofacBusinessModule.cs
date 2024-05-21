@@ -13,6 +13,7 @@ namespace LawyerWebSiteMVC.Service
             builder.RegisterType<LetterService>().As<ILetterService>().InstancePerLifetimeScope();
             builder.RegisterType<SliderService>().As<ISliderService>().InstancePerLifetimeScope();
             builder.RegisterType<AppUserService>().As<IAppUserService>().InstancePerLifetimeScope();
+            builder.RegisterType<CommentService>().As<ICommentService>().InstancePerLifetimeScope();
         }
     }
 }

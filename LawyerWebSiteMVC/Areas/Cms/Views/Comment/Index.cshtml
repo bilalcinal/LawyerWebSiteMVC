@@ -1,0 +1,41 @@
+@model IEnumerable<LawyerWebSiteMVC.Data.Comment>
+
+@{
+    ViewData["Title"] = "Comments";
+}
+
+<div class="container-xl px-4 mt-5">
+    <h1 class="mb-3">Comments</h1>
+    <a class="btn btn-primary mb-3" asp-action="Create">Create Comment</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Content</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comment in Model)
+            {
+                <tr>
+                    <td>@comment.Name</td>
+                    <td>@comment.Email</td>
+                    <td>@comment.Content</td>
+                    <td>@comment.Status</td>
+                    <td>
+                        <form asp-action="UpdateStatus" method="post">
+                            <input type="hidden" name="id" value="@comment.Id" />
+                            <input type="hidden" name="status" value="@(comment.Status ? "false" : "true")" />
+                            <button type="submit" class="btn btn-sm @(comment.Status ? "btn-warning" : "btn-success")">
+                                @(comment.Status ? "Disable" : "Approve")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
