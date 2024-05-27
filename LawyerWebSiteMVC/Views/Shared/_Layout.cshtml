@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="~/css/gijgo.css">
     <link rel="stylesheet" href="~/css/slicknav.css">
     <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/style.css?v=2">
 </head>
 <body>
     <header>
@@ -71,13 +72,11 @@
         </div>
     </header>
 
-    <div class="container">
-        <main role="main">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
 
-   <footer class="footer">
+    <footer class="footer">
         <div class="footer_top">
             <div class="container">
                 <div class="row">
@@ -114,9 +113,7 @@
                     </div>
                     <div class="col-xl-2 col-md-6 col-lg-2">
                         <div class="footer_widget">
-                            <h3 class="footer_title">
-                                    Practice Area
-                            </h3>
+                            <h3 class="footer_title">Practice Area</h3>
                             <ul>
                                 <li><a href="#">Business law</a></li>
                                 <li><a href="#">Finance law</a></li>
@@ -127,9 +124,7 @@
                     </div>
                     <div class="col-xl-2 col-md-6 col-lg-2">
                         <div class="footer_widget">
-                            <h3 class="footer_title">
-                                    Useful Links
-                            </h3>
+                            <h3 class="footer_title">Useful Links</h3>
                             <ul>
                                 <li><a href="#">About</a></li>
                                 <li><a href="#">Blog</a></li>
@@ -139,9 +134,7 @@
                     </div>
                     <div class="col-xl-4 col-md-6 col-lg-4">
                         <div class="footer_widget">
-                            <h3 class="footer_title">
-                                    Subscribe
-                            </h3>
+                            <h3 class="footer_title">Subscribe</h3>
                             <form action="#" class="newsletter_form">
                                 <input type="text" placeholder="Enter your mail">
                                 <button type="submit">Sign Up</button>
@@ -165,7 +158,7 @@
             </div>
         </div>
     </footer>
-    
+
     <!-- JS here -->
     <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
