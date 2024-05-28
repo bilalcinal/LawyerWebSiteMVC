@@ -9,6 +9,7 @@ public interface IArticleService
     Task<bool> DeleteArticleAsync(int articleId);
     Task<Article> GetArticleByIdAsync(int articleId);
     Task<IEnumerable<Article>> GetAllArticlesAsync();
+    Task<Article> GetArticleByIdWithCategoryAsync(int id);
 
     Task<(bool, string)> CreateCommentAsync(Comment comment);
     Task<bool> DeleteCommentAsync(int commentId);

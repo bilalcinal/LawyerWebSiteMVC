@@ -1,0 +1,126 @@
+@model LawyerWebSiteMVC.Data.Article
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@Model.Title</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS here -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <!-- bradcam_area_start  -->
+    <div class="bradcam_area">
+        <div class="bradcam_inner bradcam_bg_2 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="bradcam_text text-center">
+                            <h3>@Model.Title</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- bradcam_area_end  -->
+
+    <!--================Blog Area =================-->
+    <section class="blog_area single-post-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 posts-list">
+                    <div class="single-post">
+                        <div class="feature-img">
+                            @if (Model.ArticlePhotos != null && Model.ArticlePhotos.Any())
+                            {
+                                <img class="img-fluid" src="data:image/png;base64,@Convert.ToBase64String(Model.ArticlePhotos.FirstOrDefault()?.Image)" alt="Article Image">
+                            }
+                        </div>
+                        <div class="blog_details">
+                            <h2>@Model.Title</h2>
+                            <ul class="blog-info-link mt-3 mb-4">
+                                <li><a href="#"><i class="fa fa-user"></i> @Model.Category?.CategoryName</a></li>
+                            </ul>
+                            <p class="excert">
+                                @Model.Content
+                            </p>
+                            <p>
+                                @Model.Subtitle
+                            </p>
+                        </div>
+                    </div>
+                    <div class="navigation-top">
+                        <div class="d-sm-flex justify-content-between text-center">
+                            <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> Lily and 4
+                                people like this</p>
+                            <div class="col-sm-4 text-center my-2 my-sm-0">
+                                <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
+                            </div>
+                            <ul class="social-icons">
+                                <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Add more sections for quotes, comments, and reply form if necessary -->
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                        <aside class="single_sidebar_widget search_widget">
+                            <form action="#">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder='Search Keyword'
+                                               onfocus="this.placeholder = ''"
+                                               onblur="this.placeholder = 'Search Keyword'">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="button"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                        type="submit">Search</button>
+                            </form>
+                        </aside>
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title">Category</h4>
+                            @* <ul class="list cat-list">
+                                @foreach (var category in ViewBag.Categories)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "Article", new { categoryId = category.Id })" class="d-flex">
+                                            <p>@category.CategoryName</p>
+                                        </a>
+                                    </li>
+                                }
+                            </ul> *@
+                        </aside>
+                        <!-- Add other sidebar widgets if necessary -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+
+    <!-- JS here -->
+    <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/ajax-form.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/js/scrollIt.js"></script>
+</body>
+</html>

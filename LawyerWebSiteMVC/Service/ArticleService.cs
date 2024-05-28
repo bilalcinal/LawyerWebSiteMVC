@@ -166,5 +166,19 @@ namespace LawyerWebSiteMVC.Service
                 return content;
             }
         }
+        public async Task<Article> GetArticleByIdWithCategoryAsync(int id)
+        {
+            var article = await _context.Articles
+                                        .Include(a => a.Category)
+                                        .Include(a => a.ArticlePhotos)
+                                        .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (article != null)
+            {
+                article.Content = TryDeserializeContent(article.Content);
+            }
+
+            return article;
+        }
     }
 }
