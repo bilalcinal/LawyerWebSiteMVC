@@ -121,7 +121,7 @@ namespace LawyerWebSiteMVC.Service
         {
             var articles = await _context.Articles
                 .Where(a => !a.IsDeleted)
-                .Include(a => a.Category) 
+                .Include(a => a.Category)
                 .Include(a => a.ArticlePhotos)
                 .ToListAsync();
 
@@ -166,19 +166,63 @@ namespace LawyerWebSiteMVC.Service
                 return content;
             }
         }
-        public async Task<Article> GetArticleByIdWithCategoryAsync(int id)
-        {
-            var article = await _context.Articles
-                                        .Include(a => a.Category)
-                                        .Include(a => a.ArticlePhotos)
-                                        .FirstOrDefaultAsync(a => a.Id == id);
 
-            if (article != null)
-            {
-                article.Content = TryDeserializeContent(article.Content);
-            }
+       public async Task<IEnumerable<Article>> GetLatestArticlesAsync(int currentArticleId, int count = 4)
+{
+    return await _context.Articles
+        .Where(a => !a.IsDeleted && a.Id != currentArticleId)
+        .OrderByDescending(a => a.CreatedDate) // Ensure there's a CreatedDate property in the Article entity
+        .Take(count)
+        .Include(a => a.ArticlePhotos)
+        .ToListAsync();
+}
 
-            return article;
-        }
+public async Task<ArticleDetailsViewModel> GetArticleDetailsAsync(int id)
+{
+    var article = await _context.Articles
+        .Include(a => a.Category)
+        .Include(a => a.ArticlePhotos)
+        .FirstOrDefaultAsync(a => a.Id == id);
+
+    if (article == null)
+    {
+        return null;
+    }
+
+    article.Content = TryDeserializeContent(article.Content);
+
+    var previousArticle = await _context.Articles
+        .Include(a => a.ArticlePhotos)
+        .OrderByDescending(a => a.Id)
+        .FirstOrDefaultAsync(a => a.Id < id && !a.IsDeleted);
+
+    if (previousArticle != null)
+    {
+        previousArticle.Content = TryDeserializeContent(previousArticle.Content);
+    }
+
+    var nextArticle = await _context.Articles
+        .Include(a => a.ArticlePhotos)
+        .OrderBy(a => a.Id)
+        .FirstOrDefaultAsync(a => a.Id > id && !a.IsDeleted);
+
+    if (nextArticle != null)
+    {
+        nextArticle.Content = TryDeserializeContent(nextArticle.Content);
+    }
+
+    var latestArticles = await GetLatestArticlesAsync(id);
+
+    var viewModel = new ArticleDetailsViewModel
+    {
+        Article = article,
+        PreviousArticle = previousArticle,
+        NextArticle = nextArticle,
+        LatestArticles = latestArticles
+    };
+
+    return viewModel;
+}
+
     }
 }

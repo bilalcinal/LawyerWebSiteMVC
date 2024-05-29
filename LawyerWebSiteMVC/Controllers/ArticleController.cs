@@ -37,16 +37,17 @@ namespace LawyerWebSiteMVC.Controllers
             return View(viewModel);
         }
 
-         public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-            var article = await _articleService.GetArticleByIdWithCategoryAsync(id);
-            if (article == null)
+            var viewModel = await _articleService.GetArticleDetailsAsync(id);
+            if (viewModel == null)
             {
                 return NotFound();
             }
 
-            return View(article);
+            return View(viewModel);
         }
+        
     }
 
 }
