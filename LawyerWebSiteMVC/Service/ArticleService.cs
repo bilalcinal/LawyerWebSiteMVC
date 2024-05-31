@@ -167,62 +167,83 @@ namespace LawyerWebSiteMVC.Service
             }
         }
 
-       public async Task<IEnumerable<Article>> GetLatestArticlesAsync(int currentArticleId, int count = 4)
-{
-    return await _context.Articles
-        .Where(a => !a.IsDeleted && a.Id != currentArticleId)
-        .OrderByDescending(a => a.CreatedDate) // Ensure there's a CreatedDate property in the Article entity
-        .Take(count)
-        .Include(a => a.ArticlePhotos)
-        .ToListAsync();
-}
+        public async Task<IEnumerable<Article>> GetLatestArticlesAsync(int currentArticleId, int count = 4)
+        {
+            return await _context.Articles
+                .Where(a => !a.IsDeleted && a.Id != currentArticleId)
+                .OrderByDescending(a => a.CreatedDate) // Ensure there's a CreatedDate property in the Article entity
+                .Take(count)
+                .Include(a => a.ArticlePhotos)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Comment>> GetApprovedCommentsByArticleIdAsync(int articleId, int pageNumber = 1, int pageSize = 4)
+        {
+            return await _context.Comments
+                .Where(c => c.ArticleId == articleId && c.Status)
+                .OrderByDescending(c => c.CreatedDate) // Assuming there's a CreatedDate property
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
 
-public async Task<ArticleDetailsViewModel> GetArticleDetailsAsync(int id)
-{
-    var article = await _context.Articles
-        .Include(a => a.Category)
-        .Include(a => a.ArticlePhotos)
-        .FirstOrDefaultAsync(a => a.Id == id);
 
-    if (article == null)
-    {
-        return null;
-    }
+        public async Task<ArticleDetailsViewModel> GetArticleDetailsAsync(int id, int commentsPage = 1, int commentsPageSize = 4)
+        {
+            var article = await _context.Articles
+                .Include(a => a.Category)
+                .Include(a => a.ArticlePhotos)
+                .FirstOrDefaultAsync(a => a.Id == id);
 
-    article.Content = TryDeserializeContent(article.Content);
+            if (article == null)
+            {
+                return null;
+            }
 
-    var previousArticle = await _context.Articles
-        .Include(a => a.ArticlePhotos)
-        .OrderByDescending(a => a.Id)
-        .FirstOrDefaultAsync(a => a.Id < id && !a.IsDeleted);
+            article.Content = TryDeserializeContent(article.Content);
 
-    if (previousArticle != null)
-    {
-        previousArticle.Content = TryDeserializeContent(previousArticle.Content);
-    }
+            var previousArticle = await _context.Articles
+                .Include(a => a.ArticlePhotos)
+                .OrderByDescending(a => a.Id)
+                .FirstOrDefaultAsync(a => a.Id < id && !a.IsDeleted);
 
-    var nextArticle = await _context.Articles
-        .Include(a => a.ArticlePhotos)
-        .OrderBy(a => a.Id)
-        .FirstOrDefaultAsync(a => a.Id > id && !a.IsDeleted);
+            if (previousArticle != null)
+            {
+                previousArticle.Content = TryDeserializeContent(previousArticle.Content);
+            }
 
-    if (nextArticle != null)
-    {
-        nextArticle.Content = TryDeserializeContent(nextArticle.Content);
-    }
+            var nextArticle = await _context.Articles
+                .Include(a => a.ArticlePhotos)
+                .OrderBy(a => a.Id)
+                .FirstOrDefaultAsync(a => a.Id > id && !a.IsDeleted);
 
-    var latestArticles = await GetLatestArticlesAsync(id);
+            if (nextArticle != null)
+            {
+                nextArticle.Content = TryDeserializeContent(nextArticle.Content);
+            }
 
-    var viewModel = new ArticleDetailsViewModel
-    {
-        Article = article,
-        PreviousArticle = previousArticle,
-        NextArticle = nextArticle,
-        LatestArticles = latestArticles
-    };
+            var latestArticles = await GetLatestArticlesAsync(id);
 
-    return viewModel;
-}
+            var comments = await _context.Comments
+                .Where(c => c.ArticleId == id && c.Status)
+                .OrderByDescending(c => c.CreatedDate) // Assuming there's a CreatedDate property
+                .Skip((commentsPage - 1) * commentsPageSize)
+                .Take(commentsPageSize)
+                .ToListAsync();
+
+            var viewModel = new ArticleDetailsViewModel
+            {
+                Article = article,
+                PreviousArticle = previousArticle,
+                NextArticle = nextArticle,
+                LatestArticles = latestArticles,
+                Comments = comments,
+                CommentsPageNumber = commentsPage,
+                CommentsPageSize = commentsPageSize
+            };
+
+            return viewModel;
+        }
+
 
     }
 }

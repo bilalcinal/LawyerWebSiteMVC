@@ -12,6 +12,8 @@ namespace LawyerWebSiteMVC.Models
         public Article PreviousArticle { get; set; }
         public Article NextArticle { get; set; }
         public IEnumerable<Article> LatestArticles { get; set; }
-
+        public IEnumerable<Comment> Comments { get; set; }
+        public int CommentsPageNumber { get; set; }
+        public int CommentsPageSize { get; set; }
     }
 }

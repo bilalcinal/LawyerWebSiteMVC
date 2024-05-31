@@ -17,11 +17,12 @@ namespace LawyerWebSiteMVC.Service
 
         public async Task<(bool, string)> CreateCommentAsync(Comment comment)
         {
-            comment.Status = false; // Yorum oluşturulurken varsayılan olarak false ayarlanıyor
+            comment.Status = false; // New comments need approval
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
             return (true, "Comment created successfully");
         }
+
 
         public async Task<IEnumerable<Comment>> GetAllCommentsAsync()
         {
