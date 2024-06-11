@@ -21,22 +21,32 @@ namespace LawyerWebSiteMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Comment comment)
         {
+            var article = await _articleService.GetArticleByIdAsync(comment.ArticleId);
+            if (article == null)
+            {
+                ModelState.AddModelError("", "The specified article does not exist.");
+                return RedirectToAction("Detail", "Article", new { id = comment.ArticleId });
+            }
+
+            comment.Article = article;
+
+            ModelState.Remove("Article");
+
             if (ModelState.IsValid)
             {
-                var article = await _articleService.GetArticleByIdAsync(comment.ArticleId);
-                if (article == null)
-                {
-                    ModelState.AddModelError("", "The specified article does not exist.");
-                    return RedirectToAction("Detail", "Article", new { id = comment.ArticleId });
-                }
-
-                comment.Article = article; // Set the Article property
+                comment.Status = false; 
                 var (success, message) = await _commentService.CreateCommentAsync(comment);
                 if (success)
                 {
                     return RedirectToAction("Detail", "Article", new { id = comment.ArticleId });
                 }
                 ModelState.AddModelError(string.Empty, message);
+            }
+            else
+            {
+                // ModelState hatalarını ViewData'ya ekleyelim
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                ViewData["ModelStateErrors"] = errors;
             }
             return RedirectToAction("Detail", "Article", new { id = comment.ArticleId });
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Lawyer</title>
+    <title>Av. Tuğrul Şengül</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
@@ -36,17 +36,14 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">
-                                            <a href="@Url.Action("Index", "Home")">Home</a>
+                                            <a href="@Url.Action("Index", "Home")">Ana Sayfa</a>
                                         </li>
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Article" ? "active" : "")">
-                                            <a href="@Url.Action("Index", "Article")">Articles</a>
+                                            <a href="@Url.Action("Index", "Article")">Makaleler</a>
                                         </li>
-                                        <li><a href="#">Pages <i class="ti-angle-down"></i></a>
-                                            <ul class="submenu">
-                                                <li><a href="elements.html">Elements</a></li>
-                                            </ul>
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "active" : "")">
+                                            <a href="@Url.Action("Index", "About")">Hakkında</a>
                                         </li>
-                                        <li><a href="contact.html">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -127,16 +124,6 @@
                                 <li><a href="#">Blog</a></li>
                                 <li><a href="#">Contact</a></li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <div class="footer_widget">
-                            <h3 class="footer_title">Subscribe</h3>
-                            <form action="#" class="newsletter_form">
-                                <input type="text" placeholder="Enter your mail">
-                                <button type="submit">Sign Up</button>
-                            </form>
-                            <p class="newsletter_text">Subscribe newsletter to get updates</p>
                         </div>
                     </div>
                 </div>

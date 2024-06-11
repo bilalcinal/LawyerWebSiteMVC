@@ -11,9 +11,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/style.css">
+    <style>
+        .profile-image {
+            width: 300px; /* Adjusted size */
+            height: 380px; /* Adjusted size */
+            object-fit: cover;
+            border-radius: 15px; /* Makes the corners rounded */
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .single_lawyer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .single_lawyer h3 {
+            margin-top: 20px;
+        }
+
+        .single_lawyer span {
+            margin-bottom: 20px;
+        }
+
+        .single_lawyer .social_links ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+
+        .single_lawyer .social_links ul li {
+            margin: 0 10px;
+        }
+
+        .our_loyers {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    </style>
 </head>
 
-<body>  
+<body>
     <div class="slider_area">
         <div id="slider" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -26,11 +70,11 @@
             </div>
             <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
+                <span class="sr-only">Önceki</span>
             </a>
             <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
+                <span class="sr-only">Sonraki</span>
             </a>
         </div>
     </div>
@@ -119,155 +163,70 @@
     <!-- our_loyers-start  -->
     <div class="our_loyers">
         <div class="container">
-                <div class="row">
-                        <div class="col-xl-12">
-                            <div class="section_title text-center mb-60">
-                                <h3>Our Lawyers</h3>
-                                <p>Many variations of passages of Lorem Ipsum available, but the majority have <br> suffered alteration in some.</p>
-                            </div>
-                        </div>
-                    </div>
-            <div class="row">
-                <div class="col-xl-4 col-md-6 col-lg-4">
-                    <div class="single_loyers text-center">
-                        <div class="thumb">
-                            <img src="~/img/lawyers/1.png" alt="">
-                        </div>
-                        <h3>Henry Miller</h3>
-                        <span>Family Lawyer</span>
-                        <div class="social_links">
-                            <ul>
-                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-6 col-lg-4">
-                    <div class="single_loyers text-center">
-                        <div class="thumb">
-                            <img src="~/img/lawyers/2.png" alt="">
-                        </div>
-                        <h3>Jon Anderson</h3>
-                        <span>Consumer Lawyer</span>
-                        <div class="social_links">
-                            <ul>
-                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-6 col-lg-4">
-                    <div class="single_loyers text-center">
-                        <div class="thumb">
-                            <img src="~/img/lawyers/3.png" alt="">
-                        </div>
-                        <h3>Jaky Nadan</h3>
-                        <span>Criminal Lawyer</span>
-                        <div class="social_links">
-                            <ul>
-                                <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
-                                <li><a href="#"> < i class="fa fa-twitter"></i> </a></li>
-                                <li><a href="#"> <i class="fa fa-instagram"></i> </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- our_loyers-end  -->
-
-    <!-- testmonial_area_start  -->
-    <div class="testmonial_area testmonial_bg_1 overlay2">
-        <div class="container">
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="testmonial_active owl-carousel">
-                        <div class="single_testmonial text-center">
-                            <i class="flaticon-straight-quotes"></i>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the <br> majority have suffered alteration in some form, by injected humour, or <br> randomised words which don't look even slightly believable. </p>
-                            <div class="author_info d-flex justify-content-center align-items-center">
-                                <div class="thumb">
-                                    <img src="~/img/testmonial/smaill_thumb.png" alt="">
-                                </div>
-                                <span>- Millan Mirza</span>
-                            </div>
-                        </div>
-                        <div class="single_testmonial text-center">
-                            <i class="flaticon-straight-quotes"></i>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the <br> majority have suffered alteration in some form, by injected humour, or <br> randomised words which don't look even slightly believable. </p>
-                            <div class="author_info d-flex justify-content-center align-items-center">
-                                <div class="thumb">
-                                    <img src="~/img/testmonial/smaill_thumb.png" alt="">
-                                </div>
-                                <span>- Millan Mirza</span>
-                            </div>
-                        </div>
-                        <div class="single_testmonial text-center">
-                            <i class="flaticon-straight-quotes"></i>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the <br> majority have suffered alteration in some form, by injected humour, or <br> randomised words which don't look even slightly believable. </p>
-                            <div class="author_info d-flex justify-content-center align-items-center">
-                                <div class="thumb">
-                                    <img src="~/img/testmonial/smaill_thumb.png" alt="">
-                                </div>
-                                <span>- Millan Mirza</span>
-                            </div>
-                        </div>
+                    <div class="section_title text-center mb-60">
+                        <h3>Müvekkillerimin Sesi</h3>
+                        <p>Müvekkillerimin ihtiyaçlarını ve haklarını en iyi şekilde savunarak, onların sesi olmayı kendime görev edindim. Her dava, benim için müvekkilimin hayatına dokunma fırsatıdır.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-4 col-md-6 col-lg-4">
+                    <div class="single_lawyer text-center">
+                        <a href="@Url.Action("Index", "About")">
+                            <img class="profile-image" src="~/img/about/av_tugrul.jpeg" alt="Profile Image">
+                        </a>
+                        <h3>Av. Tuğrul Şengül</h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- testmonial_area_end  -->
 
-    <div class="appointment_area">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xl-5 col-md-6 col-lg-6">
-                    <div class="appiontment_thumb d-none d-lg-block">
-                        <img src="~/img/appointment/1.png" alt="">
-                    </div>
+
+   <div class="appointment_area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-xl-5 col-md-6 col-lg-6">
+                <div class="appiontment_thumb d-none d-lg-block">
+                    <img src="~/img/appointment/1.png" alt="">
                 </div>
-                <div class="col-xl-6 offset-xl-1 col-md-6 col-md-12 col-lg-6">
-                    <div class="appointment_info">
-                        <div class="opacity_icon d-none d-lg-block">
-                            <i class="flaticon-balance"></i>
-                        </div>
-                        <h3>Make an Appointment</h3>
-                        <p>Many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some.</p>
-                        <form action="#">
-                                <div class="row">
-                                    <div class="col-xl-6 col-md-6">
-                                            <input type="text" placeholder="Your Name">
-                                    </div>
-                                    <div class="col-xl-6 col-md-6">
-                                            <input type="email" placeholder="Your Email">
-                                    </div>
-                                    <div class="col-xl-6 col-md-6">
-                                            <input type="text" placeholder="Phone no.">
-                                    </div>
-                                    <div class="col-xl-6 col-md-6">
-                                        <input id="datepicker" placeholder="Appointment date">
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <textarea placeholder="Message" ></textarea>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="appoinment_button">
-                                            <button class="boxed-btn5 " type="submit" >Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+            </div>
+            <div class="col-xl-6 offset-xl-1 col-md-6 col-md-12 col-lg-6">
+                <div class="appointment_info">
+                    <div class="opacity_icon d-none d-lg-block">
+                        <i class="flaticon-balance"></i>
                     </div>
+                    <h3>Bize Ulaşın!</h3>
+                    <p></p>
+                    <form asp-action="Create" asp-controller="Letter" method="post">
+                        <div class="row">
+                            <div class="col-xl-6 col-md-6">
+                                <input type="text" name="Name" placeholder="İsim" required>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <input type="email" name="Email" placeholder="Email" required>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <input type="text" name="PhoneNumber" placeholder="Telefon No" required>
+                            </div>
+                            <div class="col-xl-12">
+                                <textarea name="Content" placeholder="Mesaj" required></textarea>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="appoinment_button">
+                                    <button class="boxed-btn5" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
     <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="~/js/popper.min.js"></script>

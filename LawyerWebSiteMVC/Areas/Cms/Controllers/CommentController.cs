@@ -24,6 +24,8 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
         public async Task<IActionResult> Index()
         {
             var comments = await _commentService.GetAllCommentsAsync();
+            var articles = await _articleService.GetAllArticlesAsync();
+            ViewBag.Articles = articles.ToDictionary(a => a.Id, a => a.Title);
             return View(comments);
         }
 
@@ -57,7 +59,7 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
         }
 
         [HttpPost]
-        [Route("UpdateStatus/{id}")]
+        [Route("UpdateStatus")]
         public async Task<IActionResult> UpdateStatus(int id, bool status)
         {
             var result = await _commentService.UpdateCommentStatusAsync(id, status);

@@ -1,14 +1,11 @@
 using LawyerWebSiteMVC.Data;
 using LawyerWebSiteMVC.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LawyerWebSiteMVC.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LetterController : ControllerBase
+    public class LetterController : Controller
     {
         private readonly ILetterService _letterService;
 
@@ -18,19 +15,19 @@ namespace LawyerWebSiteMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLetter(Letter letter)
+        public async Task<IActionResult> Create(Letter letter)
         {
-            var result = await _letterService.CreateLetterAsync(letter);
-            if (result.Item1)
-                return Ok(result.Item2);
-            return BadRequest(result.Item2);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllLetters()
-        {
-            var letters = await _letterService.GetAllLettersAsync();
-            return Ok(letters);
+            if (ModelState.IsValid)
+            {
+                var (success, message) = await _letterService.CreateLetterAsync(letter);
+                if (success)
+                {
+                    TempData["Success"] = message;
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError("", message);
+            }
+            return View(letter);
         }
     }
 }

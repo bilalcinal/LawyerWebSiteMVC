@@ -27,5 +27,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Letter> Letters { get; set; }
     public DbSet<Slider> Sliders { get; set; }
     public DbSet<AppUser> AppUsers { get; set; }
-
+    public DbSet<About> Abouts { get; set; }
 }

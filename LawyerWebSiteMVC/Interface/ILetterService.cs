@@ -6,5 +6,7 @@ namespace LawyerWebSiteMVC.Interface
     {
         Task<(bool, string)> CreateLetterAsync(Letter letter);
         Task<IEnumerable<Letter>> GetAllLettersAsync();
+        Task<Letter> GetLetterByIdAsync(int id);
+
     }
 }

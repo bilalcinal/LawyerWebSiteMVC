@@ -15,6 +15,7 @@ namespace LawyerWebSiteMVC.Service
             _context = context;
         }
 
+        
         public async Task<(bool, string)> CreateLetterAsync(Letter letter)
         {
             _context.Letters.Add(letter);
@@ -25,6 +26,11 @@ namespace LawyerWebSiteMVC.Service
         public async Task<IEnumerable<Letter>> GetAllLettersAsync()
         {
             return await _context.Letters.ToListAsync();
+        }
+
+        public async Task<Letter> GetLetterByIdAsync(int id)
+        {
+            return await _context.Letters.FindAsync(id);
         }
     }
 }

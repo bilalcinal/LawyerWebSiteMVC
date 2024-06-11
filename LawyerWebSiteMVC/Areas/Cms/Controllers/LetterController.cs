@@ -23,18 +23,14 @@ namespace LawyerWebSiteMVC.Areas.Cms.Controllers
             return View(letters);
         }
 
-        [HttpGet("Create")]
-        public IActionResult Create()
+        [HttpGet("Detail/{id}")]
+        public async Task<IActionResult> Detail(int id)
         {
-            return View();
-        }
-
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create(Letter letter)
-        {
-            var result = await _letterService.CreateLetterAsync(letter);
-            if (result.Item1)
-                return RedirectToAction("Index");
+            var letter = await _letterService.GetLetterByIdAsync(id);
+            if (letter == null)
+            {
+                return NotFound();
+            }
             return View(letter);
         }
     }

@@ -5,16 +5,15 @@
 }
 
 <div class="container-xl px-4 mt-5">
-    <h1 class="mb-3">Letters</h1>
-    <a class="btn btn-primary mb-3" asp-action="Create">New Letter</a>
+    <h1 class="mb-3">Gelen Mesajlar</h1>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Email</th>
-                <th>Name</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Phone Number</th>
+                <th>İsim</th>
+                <th>Mesaj</th>
+                <th>Telefon numarası</th>
+                <th>Detay</th>
             </tr>
         </thead>
         <tbody>
@@ -23,9 +22,11 @@
                 <tr>
                     <td>@letter.Email</td>
                     <td>@letter.Name</td>
-                    <td>@letter.Title</td>
                     <td>@Html.Raw(letter.Content.Length > 100 ? letter.Content.Substring(0, 100) + "..." : letter.Content)</td>
                     <td>@letter.PhoneNumber</td>
+                    <td>
+                        <a href="@Url.Action("Detail", "Letter", new { id = letter.Id, area = "Cms" })" class="btn btn-sm btn-info">Detay</a>
+                    </td>
                 </tr>
             }
         </tbody>

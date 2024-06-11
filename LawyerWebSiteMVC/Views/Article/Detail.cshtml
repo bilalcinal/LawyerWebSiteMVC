@@ -86,7 +86,7 @@
                                             </a>
                                         </div>
                                         <div class="detials">
-                                            <p>Prev Post</p>
+                                            <p>Önceki Makale</p>
                                             <a
                                                 href="@Url.Action("Detail", "Article", new { id = Model.PreviousArticle.Id })">
                                                 <h4>@Model.PreviousArticle.Title</h4>
@@ -99,7 +99,7 @@
                                     <div
                                         class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                                         <div class="detials">
-                                            <p>Next Post</p>
+                                            <p>Sonraki Makale</p>
                                             <a href="@Url.Action("Detail", "Article", new { id = Model.NextArticle.Id })">
                                                 <h4>@Model.NextArticle.Title</h4>
                                             </a>
@@ -124,8 +124,8 @@
 
                     </div>
                     <div class="comments-area">
-                        <h4>@Model.Comments.Count() Comments</h4>
-                        @foreach (var comment in Model.Comments)
+                        <h4>@Model.Comments.Count() Yorumlar</h4>
+                        @foreach (var comment in Model.Comments.Where(c => c.Status))
                         {
                             <div class="comment-list">
                                 <div class="single-comment justify-content-between d-flex">
@@ -138,7 +138,7 @@
                                                     <p class="date">@comment.CreatedDate.ToString("MMMM dd, yyyy at hh:mm tt")</p>
                                                 </div>
                                                 <div class="reply-btn">
-                                                    <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                    <a href="#" class="btn-reply text-uppercase">Yorum</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,28 +150,39 @@
                         <div class="pagination">
                             @if (Model.CommentsPageNumber > 1)
                             {
-                                <a href="@Url.Action("Detail", new { id = Model.Article.Id, commentsPage = Model.CommentsPageNumber - 1 })">Previous</a>
+                                <a href="@Url.Action("Detail", new { id = Model.Article.Id, commentsPage = Model.CommentsPageNumber - 1 })">Önceki</a>
                             }
                             @if (Model.Comments.Count() == Model.CommentsPageSize)
                             {
-                                <a href="@Url.Action("Detail", new { id = Model.Article.Id, commentsPage = Model.CommentsPageNumber + 1 })">Next</a>
+                                <a href="@Url.Action("Detail", new { id = Model.Article.Id, commentsPage = Model.CommentsPageNumber + 1 })">Sonraki</a>
                             }
                         </div>
                     </div>
 
                     <div class="comment-form">
-                        <h4>Leave a Reply</h4>
+                        <h4>Yorum bırakın!</h4>
+                        @if (ViewData["ModelStateErrors"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach (var error in (List<string>)ViewData["ModelStateErrors"])
+                                    {
+                                        <li>@error</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
                         <form class="form-contact comment_form" action="@Url.Action("Create", "Comment")" method="post" id="commentForm">
                             <input type="hidden" name="ArticleId" value="@Model.Article.Id" />
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <textarea class="form-control w-100" name="Content" id="comment" cols="30" rows="9" placeholder="Write Comment" required></textarea>
+                                        <textarea class="form-control w-100" name="Content" id="comment" cols="30" rows="9" placeholder="Yorum yazın" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input class="form-control" name="Name" id="name" type="text" placeholder="Name" required>
+                                        <input class="form-control" name="Name" id="name" type="text" placeholder="İsim" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -181,7 +192,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="button button-contactForm btn_1 boxed-btn">Send Message</button>
+                                <button type="submit" class="button button-contactForm btn_1 boxed-btn">Gönder</button>
                             </div>
                         </form>
                     </div>
@@ -189,7 +200,7 @@
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                        <aside class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">Recent Posts</h3>
+                            <h3 class="widget_title">Makaleler</h3>
                             @foreach (var latestArticle in Model.LatestArticles)
                             {
                                 <div class="media post_item">

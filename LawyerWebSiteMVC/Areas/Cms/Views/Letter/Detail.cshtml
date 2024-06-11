@@ -1,0 +1,28 @@
+@model LawyerWebSiteMVC.Data.Letter
+
+@{
+    ViewData["Title"] = "Letter Details";
+}
+
+<div class="container-xl px-4 mt-5">
+    <h1 class="mb-3">Letter Details</h1>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Email</th>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>@Html.Raw(Model.Content)</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>@Model.PhoneNumber</td>
+        </tr>
+    </table>
+    <a href="@Url.Action("Index", "Letter", new { area = "Cms" })" class="btn btn-primary">Back to Letters</a>
+</div>

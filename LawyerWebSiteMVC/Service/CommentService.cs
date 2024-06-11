@@ -17,12 +17,16 @@ namespace LawyerWebSiteMVC.Service
 
         public async Task<(bool, string)> CreateCommentAsync(Comment comment)
         {
-            comment.Status = false; // New comments need approval
+            // Article alanını zorunlu tutmuyorsak manuel olarak null kontrolü yapabiliriz.
+            if (comment.ArticleId <= 0)
+            {
+                return (false, "Invalid Article Id.");
+            }
+
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
             return (true, "Comment created successfully");
         }
-
 
         public async Task<IEnumerable<Comment>> GetAllCommentsAsync()
         {
