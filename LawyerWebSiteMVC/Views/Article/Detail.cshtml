@@ -135,7 +135,7 @@
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <h5><a href="#">@comment.Name</a></h5>
-                                                    <p class="date">@comment.CreatedDate.ToString("MMMM dd, yyyy at hh:mm tt")</p>
+                                                    <p class="date">@comment.CreatedDate.ToString("dd.MM.y")</p>
                                                 </div>
                                                 <div class="reply-btn">
                                                     <a href="#" class="btn-reply text-uppercase">Yorum</a>
@@ -209,7 +209,7 @@
                                         <a href="@Url.Action("Detail", "Article", new { id = latestArticle.Id })">
                                             <h3>@latestArticle.Title</h3>
                                         </a>
-                                        <p>@latestArticle.CreatedDate.ToString("MMMM dd, yyyy")</p> 
+                                        <p>@latestArticle.CreatedDate.ToString("dd.MM.y")</p> 
                                     </div>
                                 </div>
                             }
@@ -220,6 +220,7 @@
     <!--================ Blog Area end =================-->
 
     <!-- JS here -->
+
     <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="~/js/popper.min.js"></script>
@@ -244,8 +245,6 @@
     <script src="~/js/jquery.form.js"></script>
     <script src="~/js/jquery.validate.min.js"></script>
     <script src="~/js/mail-script.js"></script>
-
-    <script src="~/js/main.js"></script>
 
 </body>
 

@@ -17,6 +17,28 @@
     <link rel="stylesheet" href="~/css/slicknav.css">
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/style.css?v=2">
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .whatsapp-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .whatsapp-icon i {
+            color: white;
+            font-size: 30px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -27,7 +49,7 @@
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo-img">
                                 <a href="@Url.Action("Index", "Home")">
-                                    <img src="~/img/logo.png" alt="">
+                                    <img src="~/img/loo.png" alt="">
                                 </a>
                             </div>
                         </div>
@@ -78,11 +100,9 @@
                         <div class="footer_widget">
                             <div class="footer_logo">
                                 <a href="@Url.Action("Index", "Home")">
-                                    <img src="~/img/logo.png" alt="">
+                                    <img src="~/img/loo.png" alt="">
                                 </a>
                             </div>
-                            <p class="footer_text">200, A-block, Green road, USA <br>
-                                +10 367 267 2678 <br>
                                 <a class="domain" href="#">lawyer@contact.com</a></p>
                             <div class="socail_links">
                                 <ul>
@@ -107,22 +127,17 @@
                     </div>
                     <div class="col-xl-2 col-md-6 col-lg-2">
                         <div class="footer_widget">
-                            <h3 class="footer_title">Practice Area</h3>
+                            <h3 class="footer_title"></h3>
                             <ul>
-                                <li><a href="#">Business law</a></li>
-                                <li><a href="#">Finance law</a></li>
-                                <li><a href="#">Education law</a></li>
-                                <li><a href="#">Family law</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-md-6 col-lg-2">
-                        <div class="footer_widget">
-                            <h3 class="footer_title">Useful Links</h3>
-                            <ul>
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">
+                                    <a href="@Url.Action("Index", "Home")">Ana Sayfa</a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Article" ? "active" : "")">
+                                    <a href="@Url.Action("Index", "Article")">Makaleler</a>
+                                </li>
+                                <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "active" : "")">
+                                    <a href="@Url.Action("Index", "About")">Hakkında</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -143,6 +158,34 @@
         </div>
     </footer>
 
+    <!-- WhatsApp Icon -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/+95422590093?text=Merhaba%20Avukat%20Bey" target="_blank" class="whatsapp-icon">
+            <i class="fa fa-whatsapp"></i>
+        </a>
+    </div>
+   <style>
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        .whatsapp-icon {
+            width: 80px; /* Artırıldı */
+            height: 80px; /* Artırıldı */
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .whatsapp-icon i {
+            color: white;
+            font-size: 40px; /* Artırıldı */
+        }
+    </style>
     <!-- JS here -->
     <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="~/js/vendor/jquery-1.12.4.min.js"></script>

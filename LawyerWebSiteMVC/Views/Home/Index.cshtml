@@ -1,8 +1,7 @@
-﻿@model IEnumerable<LawyerWebSiteMVC.Data.Slider>
+﻿@model LawyerWebSiteMVC.Models.HomeViewModel
 
 <!doctype html>
 <html class="no-js" lang="zxx">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,154 +10,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/style.css">
-    <style>
-        .profile-image {
-            width: 300px; /* Adjusted size */
-            height: 380px; /* Adjusted size */
-            object-fit: cover;
-            border-radius: 15px; /* Makes the corners rounded */
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .single_lawyer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .single_lawyer h3 {
-            margin-top: 20px;
-        }
-
-        .single_lawyer span {
-            margin-bottom: 20px;
-        }
-
-        .single_lawyer .social_links ul {
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            list-style: none;
-        }
-
-        .single_lawyer .social_links ul li {
-            margin: 0 10px;
-        }
-
-        .our_loyers {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/index.css"> 
 </head>
-
 <body>
-    <div class="slider_area">
-        <div id="slider" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                @foreach (var slider in Model)
-                {
-                    <div class="carousel-item @(Model.First() == slider ? "active" : "")">
-                        <img class="d-block w-100" src="data:image/png;base64,@Convert.ToBase64String(slider.Image)" alt="Slider Image">
+    <div class="slider_area ">
+        <div class="slider_area_inner slider_bg_1 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7">
+                        <div class="single_slider">
+                            <div class="slider_text">
+                                <h3>Kaliteli Hukuki <br>
+                                    Danışmanlık ve Destek</h3>
+                                <a href="@Url.Action("Index", "Article")" class="boxed-btn4 ">Makaleler</a>
+                            </div>
+                        </div>
                     </div>
-                }
+                </div>
             </div>
-            <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Önceki</span>
-            </a>
-            <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Sonraki</span>
-            </a>
         </div>
     </div>
     <!-- slider_area_end -->
+
     <!-- practice_area_start -->
-    <div class="practice_area">
-        <div class="container-fluid p-0">
+       <section class="pt-5 pb-5">
+        <div class="container">
             <div class="row">
-                <div class="col-xl-12">
-                    <div class="section_title text-center mb-60">
-                        <h3>Practice Area</h3>
-                        <p>Many variations of passages of Lorem Ipsum available, but the majority have <br> suffered alteration in some.</p>
-                    </div>
+                <div class="col-12">
+                    <h3 class="mb-6">Son Makaleler</h3>
                 </div>
             </div>
-            <div class="row no-gutters">
-                <div class="col-xl-3 col-md-6">
-                    <div class="single_practice">
-                        <div class="practice_image">
-                            <img src="~/img/practice/1.png" alt="">
-                        </div>
-                        <div class="practice_hover text-center">
-                            <div class="hover_inner">
-                                <i class="flaticon-case"></i>
-                                <h3>Business Law</h3>
-                                <p>There are many variations of passages of <br> Lorem Ipsum available, <br> but the
-                                    majority have suffered</p>
-                                <a href="#" class="lern_more">Learn More</a>
-                            </div>
+            <div class="card-container">
+                @foreach (var article in Model.LatestArticles.Take(3))
+                {
+                    <div class="card" onclick="location.href='@Url.Action("Detail", "Article", new { id = article.Id })'">
+                        <img class="img-fluid" alt="Article Image" src="data:image/png;base64,@Convert.ToBase64String(article.ArticlePhotos.FirstOrDefault()?.Image ?? new byte[0])">
+                        <div class="card-body">
+                            <h4 class="card-title">@article.Title</h4>
+                            <p class="card-text">@article.Subtitle</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="single_practice">
-                        <div class="practice_image">
-                            <img src="~/img/practice/2.png" alt="">
-                        </div>
-                        <div class="practice_hover text-center">
-                            <div class="hover_inner">
-                                <i class="flaticon-courthouse"></i>
-                                <h3>Finance Law</h3>
-                                <p>There are many variations of passages of <br> Lorem Ipsum available, <br> but the
-                                    majority have suffered</p>
-                                <a href="#" class="lern_more">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="single_practice">
-                        <div class="practice_image">
-                            <img src="~/img/practice/3.png" alt="">
-                        </div>
-                        <div class="practice_hover text-center">
-                            <div class="hover_inner">
-                                <i class="flaticon-judge"></i>
-                                <h3>Family Law</h3>
-                                <p>There are many variations of passages of <br> Lorem Ipsum available, <br> but the
-                                    majority have suffered</p>
-                                <a href="#" class="lern_more">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6">
-                    <div class="single_practice">
-                        <div class="practice_image">
-                            <img src="~/img/practice/4.png" alt="">
-                        </div>
-                        <div class="practice_hover text-center">
-                            <div class="hover_inner">
-                                <i class="flaticon-jury"></i>
-                                <h3>Education Law</h3>
-                                <p>There are many variations of passages of <br> Lorem Ipsum available, <br> but the
-                                    majority have suffered</p>
-                                <a href="#" class="lern_more">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
-    </div>
-    <!-- practice_area_end -->
+    </section>
+<!-- practice_area_end -->
+
 
     <!-- our_loyers-start  -->
     <div class="our_loyers">
@@ -184,53 +81,58 @@
         </div>
     </div>
 
-
-   <div class="appointment_area">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-xl-5 col-md-6 col-lg-6">
-                <div class="appiontment_thumb d-none d-lg-block">
-                    <img src="~/img/appointment/1.png" alt="">
-                </div>
-            </div>
-            <div class="col-xl-6 offset-xl-1 col-md-6 col-md-12 col-lg-6">
-                <div class="appointment_info">
-                    <div class="opacity_icon d-none d-lg-block">
-                        <i class="flaticon-balance"></i>
+    <div class="appointment_area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-5 col-md-6 col-lg-6">
+                    <div class="appiontment_thumb d-none d-lg-block">
+                        <img src="~/img/appointment/1.png" alt="">
                     </div>
-                    <h3>Bize Ulaşın!</h3>
-                    <p></p>
-                    <form asp-action="Create" asp-controller="Letter" method="post">
-                        <div class="row">
-                            <div class="col-xl-6 col-md-6">
-                                <input type="text" name="Name" placeholder="İsim" required>
-                            </div>
-                            <div class="col-xl-6 col-md-6">
-                                <input type="email" name="Email" placeholder="Email" required>
-                            </div>
-                            <div class="col-xl-6 col-md-6">
-                                <input type="text" name="PhoneNumber" placeholder="Telefon No" required>
-                            </div>
-                            <div class="col-xl-12">
-                                <textarea name="Content" placeholder="Mesaj" required></textarea>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="appoinment_button">
-                                    <button class="boxed-btn5" type="submit">Submit</button>
+                </div>
+                <div class="col-xl-6 offset-xl-1 col-md-6 col-md-12 col-lg-6">
+                    <div class="appointment_info">
+                        <div class="opacity_icon d-none d-lg-block">
+                            <i class="flaticon-balance"></i>
+                        </div>
+                        <h3>Bize Ulaşın!</h3>
+                        <p></p>
+                        <form asp-action="Create" asp-controller="Letter" method="post">
+                            <div class="row">
+                                <div class="col-xl-6 col-md-6">
+                                    <input type="text" name="Name" placeholder="İsim" required>
+                                </div>
+                                <div class="col-xl-6 col-md-6">
+                                    <input type="email" name="Email" placeholder="Email" required>
+                                </div>
+                                <div class="col-xl-6 col-md-6">
+                                    <input type="text" name="PhoneNumber" placeholder="Telefon No" required>
+                                </div>
+                                <div class="col-xl-12">
+                                    <textarea name="Content" placeholder="Mesaj" required></textarea>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="appoinment_button">
+                                        <button class="boxed-btn5" type="submit">Gönder</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-    <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
+    
+   <script src="~/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/main.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/ajax-form.js"></script>
+    <script src="~/js/waypoints.min.js"></script>
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <script src="~/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/js/scrollIt.js"></script>
 </body>
 </html>
